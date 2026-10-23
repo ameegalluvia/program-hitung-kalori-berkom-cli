@@ -361,18 +361,18 @@ def main():
 
                 print("\nRekomendasi yang muat di sisa kalorimu:")
                 cocok = []
-                for m in daftar_makanan:
-                    kategori_item = kategori_rekomendasi(m)
-                    if m["kalori"] <= sisa + 50 and (
+                for data in daftar_makanan:
+                    kategori_item = kategori_rekomendasi(data)
+                    if data["kalori"] <= sisa + 50 and (
                         kategori_dipilih is None or kategori_item == kategori_dipilih
                     ):
                         item_baru = {
-                            "nama": m["nama"],
+                            "nama": data["nama"],
                             "kategori": kategori_item,
-                            "kategori_asli": m["kategori"],
-                            "porsi": m["porsi"],
-                            "kalori": m["kalori"],
-                            "selisih": abs(sisa - m["kalori"]),
+                            "kategori_asli": data["kategori"],
+                            "porsi": data["porsi"],
+                            "kalori": data["kalori"],
+                            "selisih": abs(sisa - data["kalori"]),
                         }
                         cocok.append(item_baru)
 
@@ -380,15 +380,15 @@ def main():
 
                 if not cocok:
                     print(
-                        "Belum ada rekomendasi pada kategori ini yang sesuai sisa kalori."
+                        "Belum ada rekomendasi pada kategori ini yang sesuai sisa kalori"
                     )
                 else:
                     i = 0
-                    for r in cocok:
+                    for data in cocok:
                         if i < 3:
                             print(
-                                f"- {r['nama']} [{r['kategori']} / {r['kategori_asli']}] "
-                                f"({r['porsi']}) = {r['kalori']} kkal"
+                                f"- {data['nama']} [{data['kategori']} / {data['kategori_asli']}] "
+                                f"({data['porsi']}) = {data['kalori']} kkal"
                             )
                             i = i + 1
                         else:
@@ -397,11 +397,13 @@ def main():
         elif pilihan == "4":
             print("\n--- HAPUS CATATAN ---")
             if not catatan_hari_ini:
-                print("Tidak ada catatan hari ini untuk dihapus.")
+                print("Tidak ada catatan hari ini untuk dihapus")
             else:
                 i = 1
-                for c in catatan_hari_ini:
-                    print(f"{i}. {c['jam']} - {c['nama']} ({c['kalori']} kkal)")
+                for data in catatan_hari_ini:
+                    print(
+                        f"{i}. {data['jam']} - {data['nama']} ({data['kalori']} kkal)"
+                    )
                     i = i + 1
 
                 try:
@@ -423,5 +425,4 @@ def main():
             print("Pilihan menu tidak valid, masukkan angka 0 sampai 5!")
 
 
-if __name__ == "__main__":
-    main()
+main()
