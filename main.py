@@ -132,19 +132,16 @@ def hitung_target(profil):
         profil["gender"], profil["berat"], profil["tinggi"], profil["umur"]
     )
 
-    pengali_aktivitas = {
-        "1": 1.2,
-        "2": 1.375,
-        "3": 1.55,
-        "4": 1.725,
-        "5": 1.9,
-        "sangat_ringan": 1.2,
-        "ringan": 1.375,
-        "sedang": 1.55,
-        "berat": 1.725,
-        "sangat_berat": 1.9,
-    }
-    tdee = bmr * pengali_aktivitas.get(str(profil["aktivitas"]).lower(), 1.2)
+    if profil["aktivitas"] == "sangat_ringan":
+        tdee = bmr * 1.2
+    elif profil["aktivitas"] == "ringan":
+        tdee = bmr * 1.375
+    elif profil["aktivitas"] == "sedang":
+        tdee = bmr * 1.55
+    elif profil["aktivitas"] == "berat":
+        tdee = bmr * 1.725
+    else:
+        tdee = bmr * 1.9
 
     if profil["tujuan"] == "turun":
         target = tdee - 500
