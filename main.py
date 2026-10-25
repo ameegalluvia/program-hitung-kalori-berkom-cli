@@ -271,6 +271,7 @@ def main():
             item_terpilih = None
             kalori_final = 0
             porsi_final = 1.0
+            input_manual = False
 
             if hasil:
                 print("\nHasil Pencarian:")
@@ -281,30 +282,44 @@ def main():
                     )
                     i = i + 1
 
+                nomor_manual = len(hasil) + 1
+                print(f"{nomor_manual}. Tidak ada yang cocok (input manual)")
+                print("0. Batal")
+
                 try:
-                    pilih_no = int(input("Pilih makanan/minuman no: "))
-                    if pilih_no > 0:
-                        indeks = pilih_no - 1
-                        if indeks < len(hasil):
-                            pilih_makanan = hasil[indeks]
-                            while True:
-                                try:
-                                    porsi_final = float(
-                                        input("Jumlah porsi: ").replace(",", ".")
-                                    )
-                                    if porsi_final > 0:
-                                        break
-                                    print("Jumlah porsi harus lebih dari 0")
-
-                                except ValueError:
-                                    print("Masukkan jumlah porsi berupa angka")
-
-                            kalori_final = pilih_makanan["kalori"] * porsi_final
-                            item_terpilih = pilih_makanan["nama"]
+                    pilih_no = int(input("Pilih nomor: "))
                 except ValueError:
                     print("Nomor tidak valid")
+                    continue
 
-            if item_terpilih is None:
+                if pilih_no == 0:
+                    print("Dibatalkan")
+                    continue
+                elif pilih_no == nomor_manual:
+                    input_manual = True
+                elif 1 <= pilih_no <= len(hasil):
+                    pilih_makanan = hasil[pilih_no - 1]
+                    while True:
+                        try:
+                            porsi_final = float(
+                                input("Jumlah porsi: ").replace(",", ".")
+                            )
+                            if porsi_final > 0:
+                                break
+                            print("Jumlah porsi harus lebih dari 0")
+                        except ValueError:
+                            print("Masukkan jumlah porsi berupa angka")
+
+                    kalori_final = pilih_makanan["kalori"] * porsi_final
+                    item_terpilih = pilih_makanan["nama"]
+                else:
+                    print("Nomor tidak tersedia")
+                    continue
+            else:
+                print("Makanan tidak ditemukan di daftar.")
+                input_manual = True
+
+            if input_manual:
                 print("\nInput Manual Kalori:")
                 item_terpilih = input("Nama makanan/minuman: ").strip()
                 try:
@@ -318,6 +333,8 @@ def main():
             if item_terpilih and kalori_final > 0:
                 simpan_catatan_baru(item_terpilih, porsi_final, kalori_final)
                 print(f"Berhasil mencatat: {item_terpilih} ({kalori_final} kkal)")
+            else:
+                print("Nama kosong atau kalori tidak valid. Tidak dicatat.")
 
         elif pilihan == "2":
             print("\n--- CATATAN HARI INI ---")
