@@ -132,13 +132,13 @@ def hitung_target(profil):
         profil["gender"], profil["berat"], profil["tinggi"], profil["umur"]
     )
 
-    if profil["aktivitas"] == "sangat_ringan":
+    if profil["aktivitas"] == "1":
         tdee = bmr * 1.2
-    elif profil["aktivitas"] == "ringan":
+    elif profil["aktivitas"] == "2":
         tdee = bmr * 1.375
-    elif profil["aktivitas"] == "sedang":
+    elif profil["aktivitas"] == "3":
         tdee = bmr * 1.55
-    elif profil["aktivitas"] == "berat":
+    elif profil["aktivitas"] == "4":
         tdee = bmr * 1.725
     else:
         tdee = bmr * 1.9
@@ -287,19 +287,22 @@ def main():
                         indeks = pilih_no - 1
                         if indeks < len(hasil):
                             pilih_makanan = hasil[indeks]
-                            try:
-                                porsi_final = float(
-                                    input(
-                                        "Jumlah porsi (1 atau 0.5 atau berapapun): "
-                                    ).replace(",", ".")
-                                )
-                            except ValueError:
-                                porsi_final = 1.0
+                            while True:
+                                try:
+                                    porsi_final = float(
+                                        input("Jumlah porsi: ").replace(",", ".")
+                                    )
+                                    if porsi_final > 0:
+                                        break
+                                    print("Jumlah porsi harus lebih dari 0")
+
+                                except ValueError:
+                                    print("Masukkan jumlah porsi berupa angka")
 
                             kalori_final = pilih_makanan["kalori"] * porsi_final
                             item_terpilih = pilih_makanan["nama"]
                 except ValueError:
-                    print("Nomor tidak valid.")
+                    print("Nomor tidak valid")
 
             if item_terpilih is None:
                 print("\nInput Manual Kalori:")
