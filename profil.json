@@ -1,8 +1,8 @@
 {
-  "gender": "pria",
+  "gender": "wanita",
   "umur": 18,
-  "berat": 55.0,
-  "tinggi": 175.0,
-  "aktivitas": "1",
-  "tujuan": "tetap"
+  "berat": 60.0,
+  "tinggi": 160.0,
+  "aktivitas": "2",
+  "tujuan": "naik"
 }
